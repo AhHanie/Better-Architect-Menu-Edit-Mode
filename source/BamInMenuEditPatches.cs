@@ -254,14 +254,18 @@ namespace Better_Architect_Edit_mode
             var category = Bam_DrawDesignatorGrid_CaptureCategoryPatch.CurrentCategory;
 
             var minusRect = new Rect(gizmoRect.xMax - 14f, gizmoRect.y + 2f, 12f, 12f);
+            var minusButtonRect = minusRect.ExpandedBy(2f);
+            var minusExtraHeight = minusButtonRect.height * 0.5f;
+            minusButtonRect.y -= minusExtraHeight * 0.5f;
+            minusButtonRect.height += minusExtraHeight;
             var leftRect = new Rect(gizmoRect.x + 2f, gizmoRect.yMax - 14f, 12f, 12f);
             var rightRect = new Rect(gizmoRect.xMax - 14f, gizmoRect.yMax - 14f, 12f, 12f);
 
-            if (Widgets.ButtonImage(minusRect, TexButton.Minus)) RemoveDesignator(category, designators, designator);
+            if (Widgets.ButtonImage(minusButtonRect, TexButton.Minus)) RemoveDesignator(category, designators, designator);
             if (Widgets.ButtonImage(leftRect, TexButton.ReorderUp)) MoveDesignator(category, designators, designator, -1);
             if (Widgets.ButtonImage(rightRect, TexButton.ReorderDown)) MoveDesignator(category, designators, designator, 1);
 
-            TooltipHandler.TipRegion(minusRect, "BetterArchitectEditMode.TooltipRemoveDesignator".Translate());
+            TooltipHandler.TipRegion(minusButtonRect, "BetterArchitectEditMode.TooltipRemoveDesignator".Translate());
             TooltipHandler.TipRegion(leftRect, "BetterArchitectEditMode.TooltipMoveLeftUp".Translate());
             TooltipHandler.TipRegion(rightRect, "BetterArchitectEditMode.TooltipMoveRightDown".Translate());
         }
@@ -272,10 +276,14 @@ namespace Better_Architect_Edit_mode
             var category = Bam_DrawDesignatorGrid_CaptureCategoryPatch.CurrentCategory;
 
             var minusRect = new Rect(gizmoRect.xMax - 14f, gizmoRect.y + 2f, 12f, 12f);
+            var minusButtonRect = minusRect.ExpandedBy(2f);
+            var minusExtraHeight = minusButtonRect.height * 0.5f;
+            minusButtonRect.y -= minusExtraHeight * 0.5f;
+            minusButtonRect.height += minusExtraHeight;
             var leftRect = new Rect(gizmoRect.x + 2f, gizmoRect.yMax - 14f, 12f, 12f);
             var rightRect = new Rect(gizmoRect.xMax - 14f, gizmoRect.yMax - 14f, 12f, 12f);
 
-            if (Mouse.IsOver(minusRect))
+            if (Mouse.IsOver(minusButtonRect))
             {
                 RemoveDesignator(category, designators, designator);
                 return true;
