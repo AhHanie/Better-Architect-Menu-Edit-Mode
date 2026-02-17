@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <BetterArchitectEditMode.LoadingLabel>Loading Better Architect Menu Edit Mode</BetterArchitectEditMode.LoadingLabel>
+  <BetterArchitectEditMode.SettingsTitle>Better Architect Menu | Edit Mode</BetterArchitectEditMode.SettingsTitle>
+  <BetterArchitectEditMode.SettingsIntro>Compatibility layer for Better Architect Menu. Use Edit Mode to customize parent-child categories and designators.</BetterArchitectEditMode.SettingsIntro>
+  <BetterArchitectEditMode.EditModeToggleTooltip>Toggle Edit Mode</BetterArchitectEditMode.EditModeToggleTooltip>
+  <BetterArchitectEditMode.BamMissing>Better Architect Menu is not loaded. Features are disabled.</BetterArchitectEditMode.BamMissing>
+  <BetterArchitectEditMode.ResetAll>Reset all overrides</BetterArchitectEditMode.ResetAll>
+  <BetterArchitectEditMode.ResetAllComplete>All Better Architect Edit Mode settings were reset.</BetterArchitectEditMode.ResetAllComplete>
+  <BetterArchitectEditMode.TooltipAddCategoryToParent>Add category to this parent</BetterArchitectEditMode.TooltipAddCategoryToParent>
+  <BetterArchitectEditMode.TooltipRemoveSelectedChildCategory>Remove selected child category</BetterArchitectEditMode.TooltipRemoveSelectedChildCategory>
+  <BetterArchitectEditMode.TooltipMoveSelectedChildUp>Move selected child up</BetterArchitectEditMode.TooltipMoveSelectedChildUp>
+  <BetterArchitectEditMode.TooltipMoveSelectedChildDown>Move selected child down</BetterArchitectEditMode.TooltipMoveSelectedChildDown>
+  <BetterArchitectEditMode.TooltipResetCategoriesForParent>Reset categories for this parent</BetterArchitectEditMode.TooltipResetCategoriesForParent>
+  <BetterArchitectEditMode.TooltipResetDesignatorsForSelectedCategory>Reset designator overrides for selected category</BetterArchitectEditMode.TooltipResetDesignatorsForSelectedCategory>
+  <BetterArchitectEditMode.CategoryOptionFormat>{0} ({1})</BetterArchitectEditMode.CategoryOptionFormat>
+  <BetterArchitectEditMode.MissingSuffix>[missing]</BetterArchitectEditMode.MissingSuffix>
+  <BetterArchitectEditMode.NoCategoriesAvailable>No categories available</BetterArchitectEditMode.NoCategoriesAvailable>
+  <BetterArchitectEditMode.TooltipAddBuildableOrSpecialDesignator>Add buildable or special designator</BetterArchitectEditMode.TooltipAddBuildableOrSpecialDesignator>
+  <BetterArchitectEditMode.TooltipRemoveDesignator>Remove designator</BetterArchitectEditMode.TooltipRemoveDesignator>
+  <BetterArchitectEditMode.TooltipMoveLeftUp>Move left/up</BetterArchitectEditMode.TooltipMoveLeftUp>
+  <BetterArchitectEditMode.TooltipMoveRightDown>Move right/down</BetterArchitectEditMode.TooltipMoveRightDown>
+  <BetterArchitectEditMode.AddBuildable>Add buildable</BetterArchitectEditMode.AddBuildable>
+  <BetterArchitectEditMode.AddBuildableTitle>Add Buildable</BetterArchitectEditMode.AddBuildableTitle>
+  <BetterArchitectEditMode.AddSpecialDesignator>Add special designator</BetterArchitectEditMode.AddSpecialDesignator>
+  <BetterArchitectEditMode.AddSpecialDesignatorTitle>Add Special Designator</BetterArchitectEditMode.AddSpecialDesignatorTitle>
+  <BetterArchitectEditMode.SearchShowing>Showing {0} / {1}</BetterArchitectEditMode.SearchShowing>
+  <BetterArchitectEditMode.Close>Close</BetterArchitectEditMode.Close>
+</LanguageData>
