@@ -194,6 +194,11 @@ namespace Better_Architect_Edit_mode
                 .ThenBy(d => d.LabelCap.ToString());
         }
 
+        public static bool IsParentCategory(string defName)
+        {
+            return defaultParentChildren.TryGetValue(defName, out var children) && children != null && children.Count > 0;
+        }
+
         private static void RebuildDefaultCaches()
         {
             defaultParentChildren.Clear();

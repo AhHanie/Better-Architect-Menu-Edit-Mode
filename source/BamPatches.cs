@@ -60,4 +60,38 @@ namespace Better_Architect_Edit_mode
             BamRuntime.InvalidateAllCaches();
         }
     }
+
+    [HarmonyPatch(typeof(MainTabWindow_Architect), "CacheDesPanels")]
+    public static class Bam_MainTabWindowArchitect_CacheDesPanels_SkipParentsPatch
+    {
+        public static void Postfix(MainTabWindow_Architect __instance)
+        {
+            var removedSelected = false;
+            for (int i = __instance.desPanelsCached.Count - 1; i >= 0; i--)
+            {
+                var tab = __instance.desPanelsCached[i];
+
+                var defName = tab.def.defName;
+                if (!BamRuntime.IsParentCategory(defName))
+                {
+                    continue;
+                }
+
+                if (ModSettings.ShouldSkipParentCategory(defName))
+                {
+                    if (__instance.selectedDesPanel == tab)
+                    {
+                        removedSelected = true;
+                    }
+
+                    __instance.desPanelsCached.RemoveAt(i);
+                }
+            }
+
+            if (removedSelected)
+            {
+                __instance.selectedDesPanel = null;
+            }
+        }
+    }
 }

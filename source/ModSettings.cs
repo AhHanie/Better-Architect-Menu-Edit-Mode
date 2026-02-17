@@ -10,6 +10,7 @@ namespace Better_Architect_Edit_mode
         public static int schemaVersion = 1;
         public static Dictionary<string, ParentOverride> parentOverrides = new Dictionary<string, ParentOverride>();
         public static Dictionary<string, CategoryOverride> categoryOverrides = new Dictionary<string, CategoryOverride>();
+        public static List<string> skippedParentCategoryIds = new List<string>();
 
         public override void ExposeData()
         {
@@ -17,11 +18,17 @@ namespace Better_Architect_Edit_mode
             Scribe_Values.Look(ref schemaVersion, "schemaVersion", 1);
             Scribe_Collections.Look(ref parentOverrides, "parentOverrides", LookMode.Value, LookMode.Deep);
             Scribe_Collections.Look(ref categoryOverrides, "categoryOverrides", LookMode.Value, LookMode.Deep);
+            Scribe_Collections.Look(ref skippedParentCategoryIds, "skippedParentCategoryIds", LookMode.Value);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (parentOverrides == null) parentOverrides = new Dictionary<string, ParentOverride>();
                 if (categoryOverrides == null) categoryOverrides = new Dictionary<string, CategoryOverride>();
+                if (skippedParentCategoryIds == null) skippedParentCategoryIds = new List<string>();
+                skippedParentCategoryIds = skippedParentCategoryIds
+                    .Where(id => !id.NullOrEmpty())
+                    .Distinct()
+                    .ToList();
             }
         }
 
@@ -54,6 +61,12 @@ namespace Better_Architect_Edit_mode
             editMode = false;
             parentOverrides.Clear();
             categoryOverrides.Clear();
+            skippedParentCategoryIds.Clear();
+        }
+
+        public static bool ShouldSkipParentCategory(string parentDefName)
+        {
+            return skippedParentCategoryIds.Contains(parentDefName);
         }
     }
 

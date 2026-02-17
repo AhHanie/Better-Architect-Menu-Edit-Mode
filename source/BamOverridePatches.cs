@@ -322,15 +322,46 @@ namespace Better_Architect_Edit_mode
                 });
             }
 
+            return BuildMixedDesignatorList(defaults, buildables, specials);
+        }
+
+        private static List<Designator> BuildMixedDesignatorList(List<Designator> defaults, List<Designator> buildables, List<Designator> specials)
+        {
             var result = new List<Designator>(buildables.Count + specials.Count);
-            for (int i = 0; i < buildables.Count; i++)
+            var buildableQueue = new Queue<Designator>(buildables);
+            var specialQueue = new Queue<Designator>(specials);
+
+            // Preserve original mixed panel pattern to avoid cross-type merge side effects.
+            for (int i = 0; i < defaults.Count; i++)
             {
-                result.Add(buildables[i]);
+                var slot = defaults[i];
+                var isBuildableSlot = !GetBuildableDefName(slot).NullOrEmpty();
+                if (isBuildableSlot)
+                {
+                    if (buildableQueue.Count > 0)
+                    {
+                        result.Add(buildableQueue.Dequeue());
+                    }
+                }
+                else
+                {
+                    if (specialQueue.Count > 0)
+                    {
+                        result.Add(specialQueue.Dequeue());
+                    }
+                }
             }
-            for (int i = 0; i < specials.Count; i++)
+
+            while (buildableQueue.Count > 0)
             {
-                result.Add(specials[i]);
+                result.Add(buildableQueue.Dequeue());
             }
+
+            while (specialQueue.Count > 0)
+            {
+                result.Add(specialQueue.Dequeue());
+            }
+
             return result;
         }
 
@@ -397,5 +428,87 @@ namespace Better_Architect_Edit_mode
             }
         }
     }
+
+    [HarmonyPatch(typeof(ArchitectCategoryTab_DesignationTabOnGUI_Patch), "SeparateDesignatorsByType")]
+    public static class Bam_SeparateDesignatorsByType_NoCrossSideMergePatch
+    {
+        public static void Postfix(
+            IEnumerable<Designator> allDesignators,
+            DesignationCategoryDef category,
+            ref ValueTuple<List<Designator>, List<Designator>> __result)
+        {
+            var buildablesRaw = new List<Designator>();
+            var ordersRaw = new List<Designator>();
+
+            foreach (var designator in allDesignators)
+            {
+                if (IsBuildableLike(designator))
+                {
+                    buildablesRaw.Add(designator);
+                }
+                else
+                {
+                    ordersRaw.Add(designator);
+                }
+            }
+
+            // Key fix: dedupe/merge is done per panel side to avoid cross-side reclassification.
+            var buildables = GetUniqueDesignators(buildablesRaw);
+            var orders = GetUniqueDesignators(ordersRaw);
+
+            if (IsSpecialCategory(category))
+            {
+                buildables.AddRange(orders);
+                orders.Clear();
+            }
+
+            __result = new ValueTuple<List<Designator>, List<Designator>>(buildables, orders);
+        }
+
+        private static bool IsBuildableLike(Designator designator)
+        {
+            if (designator is Designator_Build)
+            {
+                return true;
+            }
+
+            if (designator is Designator_Dropdown dropdown)
+            {
+                return dropdown.Elements.Any(e => e is Designator_Build);
+            }
+
+            return false;
+        }
+
+        private static List<Designator> GetUniqueDesignators(IEnumerable<Designator> source)
+        {
+            var unique = new List<Designator>();
+            foreach (var designator in source)
+            {
+                var existing = unique.FirstOrDefault(u => u.GroupsWith(designator));
+                if (existing != null)
+                {
+                    existing.MergeWith(designator);
+                }
+                else
+                {
+                    unique.Add(designator);
+                }
+            }
+
+            return unique;
+        }
+
+        private static bool IsSpecialCategory(DesignationCategoryDef category)
+        {
+            // Use BAM's original special-category criteria only; avoid visibility overrides.
+            var sourceDef = DefDatabase<DesignationCategoryDef>.GetNamedSilentFail(category.defName) ?? category;
+            return sourceDef == DefsOf.Orders ||
+                   sourceDef == DesignationCategoryDefOf.Zone ||
+                   sourceDef.defName == "Blueprints" ||
+                   sourceDef.GetModExtension<SpecialCategoryExtension>() != null;
+        }
+    }
+
 }
 

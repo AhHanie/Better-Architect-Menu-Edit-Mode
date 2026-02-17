@@ -321,7 +321,7 @@ namespace Better_Architect_Edit_mode
                 if (!entry.replaceDefaultSpecials)
                 {
                     entry.replaceDefaultSpecials = true;
-                    entry.specialClassNames = currentDesignators.Where(d => GetBuildableDefName(d).NullOrEmpty()).Select(d => d.GetType().FullName).Where(n => !n.NullOrEmpty()).Distinct().ToList();
+                    entry.specialClassNames = BuildSpecialClassSeedList(category, currentDesignators, entry);
                 }
                 entry.specialClassNames.Remove(className);
             }
@@ -350,7 +350,7 @@ namespace Better_Architect_Edit_mode
                 if (!entry.replaceDefaultSpecials)
                 {
                     entry.replaceDefaultSpecials = true;
-                    entry.specialClassNames = currentDesignators.Where(d => GetBuildableDefName(d).NullOrEmpty()).Select(d => d.GetType().FullName).Where(n => !n.NullOrEmpty()).Distinct().ToList();
+                    entry.specialClassNames = BuildSpecialClassSeedList(category, currentDesignators, entry);
                 }
                 if (!entry.specialClassNames.Contains(className)) entry.specialClassNames.Add(className);
                 Bam_HandleCategorySelection_InMenuButtonsPatch.MoveString(entry.specialClassNames, className, dir);
@@ -407,6 +407,61 @@ namespace Better_Architect_Edit_mode
                 return nested != null && nested.PlacingDef != null ? nested.PlacingDef.defName : null;
             }
             return null;
+        }
+
+        private static List<string> BuildSpecialClassSeedList(DesignationCategoryDef category, List<Designator> currentDesignators, CategoryOverride entry)
+        {
+            var result = new List<string>();
+
+            if (category.specialDesignatorClasses != null)
+            {
+                for (int i = 0; i < category.specialDesignatorClasses.Count; i++)
+                {
+                    var type = category.specialDesignatorClasses[i];
+                    AddUniqueClassName(result, type.FullName);
+                }
+            }
+
+            if (category.ResolvedAllowedDesignators != null)
+            {
+                foreach (var defaultDesignator in category.ResolvedAllowedDesignators)
+                {
+                    if (!GetBuildableDefName(defaultDesignator).NullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    AddUniqueClassName(result, defaultDesignator.GetType().FullName);
+                }
+            }
+
+            for (int i = 0; i < entry.specialClassNames.Count; i++)
+            {
+                AddUniqueClassName(result, entry.specialClassNames[i]);
+            }
+
+            for (int i = 0; i < currentDesignators.Count; i++)
+            {
+                var designator = currentDesignators[i];
+                if (!GetBuildableDefName(designator).NullOrEmpty())
+                {
+                    continue;
+                }
+
+                AddUniqueClassName(result, designator.GetType().FullName);
+            }
+
+            return result;
+        }
+
+        private static void AddUniqueClassName(List<string> classNames, string className)
+        {
+            if (classNames.Contains(className))
+            {
+                return;
+            }
+
+            classNames.Add(className);
         }
     }
 
