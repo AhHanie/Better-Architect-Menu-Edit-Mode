@@ -5,8 +5,8 @@
   <BetterArchitectEditMode.SettingsIntro>Compatibility layer for Better Architect Menu. Use Edit Mode to customize parent-child categories and designators.</BetterArchitectEditMode.SettingsIntro>
   <BetterArchitectEditMode.EditModeToggleTooltip>Toggle Edit Mode</BetterArchitectEditMode.EditModeToggleTooltip>
   <BetterArchitectEditMode.BamMissing>Better Architect Menu is not loaded. Features are disabled.</BetterArchitectEditMode.BamMissing>
-  <BetterArchitectEditMode.SkipParentCategoriesTitle>Skip Parent Category Rendering</BetterArchitectEditMode.SkipParentCategoriesTitle>
-  <BetterArchitectEditMode.SkipParentCategoriesDesc>Checked parent categories will be hidden from the Architect tab list.</BetterArchitectEditMode.SkipParentCategoriesDesc>
+  <BetterArchitectEditMode.SkipParentCategoriesTitle>Parent Category Rendering</BetterArchitectEditMode.SkipParentCategoriesTitle>
+  <BetterArchitectEditMode.SkipParentCategoriesDesc>Checked parent categories are visible. Uncheck to hide from Architect tabs.</BetterArchitectEditMode.SkipParentCategoriesDesc>
   <BetterArchitectEditMode.NoParentCategories>No parent categories found.</BetterArchitectEditMode.NoParentCategories>
   <BetterArchitectEditMode.SkipParentCategoryTooltip>Hide {0} from Architect tabs</BetterArchitectEditMode.SkipParentCategoryTooltip>
   <BetterArchitectEditMode.ResetAll>Reset all overrides</BetterArchitectEditMode.ResetAll>

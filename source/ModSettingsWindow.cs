@@ -67,13 +67,13 @@ namespace Better_Architect_Edit_mode
             {
                 var parentDef = parents[i];
 
-                var shouldSkip = ModSettings.ShouldSkipParentCategory(parentDef.defName);
-                var previous = shouldSkip;
-                rowListing.CheckboxLabeled(parentDef.LabelCap + " (" + parentDef.defName + ")", ref shouldSkip);
+                var isEnabled = !ModSettings.ShouldSkipParentCategory(parentDef.defName);
+                var previous = isEnabled;
+                rowListing.CheckboxLabeled(parentDef.LabelCap + " (" + parentDef.defName + ")", ref isEnabled);
 
-                if (shouldSkip != previous)
+                if (isEnabled != previous)
                 {
-                    SetParentCategorySkipped(parentDef.defName, shouldSkip);
+                    SetParentCategorySkipped(parentDef.defName, !isEnabled);
                     BamRuntime.InvalidateAllCaches();
                     RefreshArchitectTabs();
                 }
