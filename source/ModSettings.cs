@@ -26,8 +26,9 @@ namespace Better_Architect_Edit_mode
                 if (categoryOverrides == null) categoryOverrides = new Dictionary<string, CategoryOverride>();
                 if (skippedParentCategoryIds == null) skippedParentCategoryIds = new List<string>();
                 skippedParentCategoryIds = skippedParentCategoryIds
-                    .Where(id => !id.NullOrEmpty())
-                    .Distinct()
+                    .Where(id =>
+                        !id.NullOrEmpty() &&
+                        DefDatabase<DesignationCategoryDef>.GetNamedSilentFail(id) != null)
                     .ToList();
             }
         }
@@ -120,6 +121,14 @@ namespace Better_Architect_Edit_mode
             if (specialClassNames == null) specialClassNames = new List<string>();
             if (buildableDefNames == null) buildableDefNames = new List<string>();
             if (removedBuildableDefNames == null) removedBuildableDefNames = new List<string>();
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                buildableDefNames.RemoveAll(defName =>
+                    defName.NullOrEmpty() || DefDatabase<BuildableDef>.GetNamedSilentFail(defName) == null);
+                removedBuildableDefNames.RemoveAll(defName =>
+                    defName.NullOrEmpty() || DefDatabase<BuildableDef>.GetNamedSilentFail(defName) == null);
+            }
         }
     }
 }
