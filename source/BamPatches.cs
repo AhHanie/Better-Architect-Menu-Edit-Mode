@@ -71,13 +71,7 @@ namespace Better_Architect_Edit_mode
             {
                 var tab = __instance.desPanelsCached[i];
 
-                var defName = tab.def.defName;
-                if (!BamRuntime.IsParentCategory(defName))
-                {
-                    continue;
-                }
-
-                if (ModSettings.ShouldSkipParentCategory(defName))
+                if (ModSettings.ShouldSkipParentCategory(tab.def.defName))
                 {
                     if (__instance.selectedDesPanel == tab)
                     {
