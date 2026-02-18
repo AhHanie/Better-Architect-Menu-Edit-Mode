@@ -23,6 +23,7 @@ namespace Better_Architect_Edit_mode
             }
             GetSettings<ModSettings>();
             BamRuntime.Initialize();
+            ModSettingsWindow.allCategoryDefs = DefDatabase<DesignationCategoryDef>.AllDefsListForReading;
             new Harmony("sk.betterarchitectedit").PatchAll();
         }
 

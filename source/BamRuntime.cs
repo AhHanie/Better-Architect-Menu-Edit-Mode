@@ -1,9 +1,7 @@
 using BetterArchitect;
-using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using static RimWorld.ColonistBar;
 
 namespace Better_Architect_Edit_mode
 {
@@ -26,6 +24,7 @@ namespace Better_Architect_Edit_mode
         private static readonly Dictionary<string, List<string>> defaultParentChildren = new Dictionary<string, List<string>>();
         private static readonly Dictionary<string, Dictionary<string, int>> runtimeChildOrderByParent = new Dictionary<string, Dictionary<string, int>>();
         private static readonly Dictionary<string, DesignationCategoryDef> categoryProxyDefs = new Dictionary<string, DesignationCategoryDef>();
+        private static HashSet<DesignationCategoryDef> cachedParents = null;
 
         public static int CacheVersion
         {
@@ -186,12 +185,16 @@ namespace Better_Architect_Edit_mode
             return proxy;
         }
 
-        public static IEnumerable<DesignationCategoryDef> GetParents()
+        public static HashSet<DesignationCategoryDef> GetParents()
         {
-            return DefDatabase<DesignationCategoryDef>.AllDefsListForReading
+            if (cachedParents == null)
+            {
+                cachedParents = DefDatabase<DesignationCategoryDef>.AllDefsListForReading
                 .Where(d => !defaultParentChildren.TryGetValue(d.defName, out var children) || children.Count > 0)
                 .OrderBy(d => d.order)
-                .ThenBy(d => d.LabelCap.ToString());
+                .ThenBy(d => d.LabelCap.ToString()).ToHashSet();
+            }
+            return cachedParents;
         }
 
         public static bool IsParentCategory(string defName)

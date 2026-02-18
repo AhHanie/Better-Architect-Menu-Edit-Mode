@@ -77,7 +77,7 @@ namespace Better_Architect_Edit_mode
         private static void OpenAddCategoryMenu(string parentId, List<string> currentChildren)
         {
             var options = new List<FloatMenuOption>();
-            var parentCategoryIds = new HashSet<string>(BamRuntime.GetParents().Select(d => d.defName));
+            var parentCategoryIds = BamRuntime.GetParents().Select(d => d.defName);
             foreach (var def in DefDatabase<DesignationCategoryDef>.AllDefsListForReading
                          .Where(d => d.defName != parentId &&
                                      !currentChildren.Contains(d.defName) &&

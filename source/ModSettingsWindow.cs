@@ -1,13 +1,14 @@
 using RimWorld;
-using System.Linq;
 using UnityEngine;
 using Verse;
+using System.Collections.Generic;
 
 namespace Better_Architect_Edit_mode
 {
     public static class ModSettingsWindow
     {
         private static Vector2 parentCategoryScrollPosition;
+        public static List<DesignationCategoryDef> allCategoryDefs;
 
         public static void Draw(Rect parent)
         {
@@ -46,26 +47,19 @@ namespace Better_Architect_Edit_mode
             listing.Label("BetterArchitectEditMode.SkipParentCategoriesDesc".Translate());
             listing.Gap(4f);
 
-            var parents = BamRuntime.GetParents().ToList();
-            if (parents.Count == 0)
-            {
-                listing.Label("BetterArchitectEditMode.NoParentCategories".Translate());
-                return;
-            }
-
             var outRectHeight = Mathf.Clamp(parent.height - 180f, 120f, 320f);
             var outRect = listing.GetRect(outRectHeight);
             Widgets.DrawBoxSolid(outRect, new Color(0f, 0f, 0f, 0.15f));
             Widgets.DrawBox(outRect, 1);
 
-            var viewRect = new Rect(0f, 0f, outRect.width - 16f, parents.Count * 30f + 8f);
+            var viewRect = new Rect(0f, 0f, outRect.width - 16f, allCategoryDefs.Count * 30f + 8f);
             Widgets.BeginScrollView(outRect, ref parentCategoryScrollPosition, viewRect);
 
             var rowListing = new Listing_Standard();
             rowListing.Begin(new Rect(4f, 4f, viewRect.width - 8f, viewRect.height - 8f));
-            for (int i = 0; i < parents.Count; i++)
+            for (int i = 0; i < allCategoryDefs.Count; i++)
             {
-                var parentDef = parents[i];
+                var parentDef = allCategoryDefs[i];
 
                 var isEnabled = !ModSettings.ShouldSkipParentCategory(parentDef.defName);
                 var previous = isEnabled;
