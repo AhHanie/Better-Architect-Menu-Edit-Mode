@@ -30,4 +30,5 @@
   <BetterArchitectEditMode.AddSpecialDesignatorTitle>Add Special Designator</BetterArchitectEditMode.AddSpecialDesignatorTitle>
   <BetterArchitectEditMode.SearchShowing>Showing {0} / {1}</BetterArchitectEditMode.SearchShowing>
   <BetterArchitectEditMode.Close>Close</BetterArchitectEditMode.Close>
+  <BetterArchitectEditMode.DeprecationLabel>This mod is deprecated and is no longer needed. All features present in this mod are now integrated into the original Better Architect Menu. Your settings will be lost and you'll have to redo them. I apologize for that.</BetterArchitectEditMode.DeprecationLabel>
 </LanguageData>

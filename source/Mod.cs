@@ -16,11 +16,8 @@ namespace Better_Architect_Edit_mode
 
         public void Init()
         {
-            if (!BamCompatibility.IsBamLoaded)
-            {
-                Logger.Error("Better Architect Menu (ferny.betterarchitect) is missing. This mod requires Better Architect Menu as a hard dependency.");
-                return;
-            }
+            Log.Error("[Better Architect Menu | Edit Mode] This mod is deprecated and is no longer needed. All features present in this mod are now integrated into the original Better Architect Menu. Your settings will be lost and you'll have to redo them. I apologize for that.");
+            return;
             GetSettings<ModSettings>();
             BamRuntime.Initialize();
             ModSettingsWindow.allCategoryDefs = DefDatabase<DesignationCategoryDef>.AllDefsListForReading;

@@ -15,7 +15,10 @@ namespace Better_Architect_Edit_mode
             var listing = new Listing_Standard();
             listing.Begin(parent.ContractedBy(8f));
 
-            listing.Label("BetterArchitectEditMode.SettingsIntro".Translate());
+            listing.Label("BetterArchitectEditMode.DeprecationLabel".Translate());
+            listing.End();
+
+            return;
             listing.GapLine();
 
             if (!BamCompatibility.IsBamLoaded)
@@ -37,7 +40,7 @@ namespace Better_Architect_Edit_mode
                 Messages.Message("BetterArchitectEditMode.ResetAllComplete".Translate(), MessageTypeDefOf.NeutralEvent, false);
             }
 
-            listing.End();
+            
         }
 
         private static void DrawSkipParentCategorySection(Listing_Standard listing, Rect parent)
